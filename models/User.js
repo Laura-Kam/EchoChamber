@@ -1,23 +1,29 @@
-const mongoose = require("mongoose");
+let { Types, Schema } = require("mongoose");
+let mongoose = require("mongoose");
 
 //create userSchema first.
-const userSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true, trim: true },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    //email validator.
-    // validate: [validateEmail, "Please fill a valid email address"],
-    // match: [
-    //   /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-    //   "Please fill a valid email address",
-    // ],
+const userSchema = new Schema(
+  {
+    username: { type: String, required: true, unique: true, trim: true },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      match: [
+        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+        "Please fill a valid email address",
+      ],
+    },
+    //Array of _id values referencing the Thought model??
+    thoughts: [{ type: Schema.Types.ObjectId, ref: "Thought" }],
+    friends: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
-  //Array of _id values referencing the Thought model??
-  thoughts: [{ _id: [], type: Schema.Types.ObjectId, ref: "Thought" }],
-  friends: [{ _id: [], type: Schema.Types.ObjectId, ref: "User" }],
-});
+  {
+    toJSON: {
+      virtuals: true,
+    },
+  }
+);
 
 //Schema Settings
 

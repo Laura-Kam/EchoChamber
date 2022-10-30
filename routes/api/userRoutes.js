@@ -1,22 +1,19 @@
 // /api/users
 
 const { User } = require("../../models");
-
+const router = require("express").Router();
+const db = require("../../config/connection");
 // GET all users
 
-app.get("/all-users", (req, res) => {
-  User.find({}, (err, result) => {
-    if (err) {
-      res.status(500).send({ message: "Internal Server Error" });
-    } else {
-      res.status(200).json(result);
-    }
+router.get("/all-users", (req, res) => {
+  User.find().then((user) => {
+    return res.json({ status: 200, success: true, data: user });
   });
 });
 
 // GET a single user by its _id and populated thought and friend data
 
-app.get("/find-user/:id", (req, res) => {
+router.get("/find-user/:id", (req, res) => {
   User.findOne(
     {
       user: req.params.user_id, //correct syntax?
@@ -34,12 +31,12 @@ app.get("/find-user/:id", (req, res) => {
 
 // POST/Create a new user:
 
-app.post("/create", (req, res) => {
-  db.collection("Echo-ChamberDB").insertOne(
-    { username: req.body.username, email: req.body.email },
-    (err, results) => {
-      if (err) throw err;
-      res.json(results);
-    }
-  );
+//Does not go into correct area.
+
+router.post("/create", (req, res) => {
+  User.create({ username: req.body.username, email: req.body.email })
+    .then((user) => res.json(user))
+    .catch((err) => res.status(500).json(err));
 });
+
+module.exports = router;

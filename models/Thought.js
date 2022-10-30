@@ -1,31 +1,48 @@
-const mongoose = require("mongoose");
-
-const mongoose = require("mongoose");
+let { Types, Schema } = require("mongoose");
+let mongoose = require("mongoose");
 
 //create reactionSchema only.
-const reactionSchema = new mongoose.Schema({
-  reactionId: { type: Schema.Types.ObjectId, default: newObjectId },
-  reactionBody: { type: String, required: true, maxLength: 280 },
-  username: { type: String, required: true },
-  createdAt: {
-    type: Date,
-    default: Date.now, //will this Date object be enough.
-    get: (date) => timeSince(date), //needs function attached to timesince?
+const reactionSchema = new mongoose.Schema(
+  {
+    reactionId: {
+      type: Schema.Types.ObjectId,
+      default: () => new Types.ObjectId(),
+    }, //newobjId
+    reactionBody: { type: String, required: true, maxLength: 280 },
+    username: { type: String, required: true },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: (date) => date.toLocalString(),
+    },
   },
-});
+  {
+    toJSON: {
+      getters: true,
+    },
+  }
+);
 
 //create thoughtSchema first.
-const thoughtSchema = new mongoose.Schema({
-  thoughtText: { type: String, required: true, minLength: 1, maxLength: 280 },
-  createdAt: {
-    type: Date,
-    default: Date.now, //will this Date object be enough.
-    get: (date) => timeSince(date), //needs function attached to timesince?
+const thoughtSchema = new mongoose.Schema(
+  {
+    thoughtText: { type: String, required: true, minLength: 1, maxLength: 280 },
+    createdAt: {
+      type: Date,
+      default: Date.now, //will this Date object be enough.
+      get: (date) => date.toLocalString(),
+    },
+    username: { type: String, required: true },
+    //link to subdocument reaction schema.
+    reaction: [reactionSchema],
   },
-  username: { type: String, required: true },
-  //link to subdocument reaction schema.
-  reaction: [reactionSchema],
-});
+  {
+    toJSON: {
+      getters: true,
+      virtuals: true,
+    },
+  }
+);
 
 //Schema Settings
 
@@ -37,6 +54,6 @@ thoughtSchema.virtual("reactionCount").get(function () {
 });
 
 // Uses mongoose.model() to create model
-const User = mongoose.model("Thought", thoughtSchema);
+const Thought = mongoose.model("Thought", thoughtSchema);
 
 module.exports = Thought;

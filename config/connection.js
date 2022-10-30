@@ -8,3 +8,5 @@ mongoose.connect("mongodb://127.0.0.1:27017/Echo-ChamberDB", {
 
 // Export connection
 module.exports = mongoose.connection;
+
+//collections are Thought and User - they are 'tables'
