@@ -8,11 +8,11 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
     //email validator.
-    validate: [validateEmail, "Please fill a valid email address"],
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      "Please fill a valid email address",
-    ],
+    // validate: [validateEmail, "Please fill a valid email address"],
+    // match: [
+    //   /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+    //   "Please fill a valid email address",
+    // ],
   },
   //Array of _id values referencing the Thought model??
   thoughts: [{ _id: [], type: Schema.Types.ObjectId, ref: "Thought" }],
