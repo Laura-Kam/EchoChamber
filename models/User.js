@@ -22,6 +22,7 @@ const userSchema = new Schema(
     toJSON: {
       virtuals: true,
     },
+    id: false, //stop duplication of id.
   }
 );
 
@@ -31,7 +32,7 @@ const userSchema = new Schema(
 //length of the user's friends array field on query.
 
 userSchema.virtual("friendCount").get(function () {
-  return this.userSchema.friends.length;
+  return this.friends.length;
 });
 
 // Uses mongoose.model() to create model
