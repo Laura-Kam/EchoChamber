@@ -45,6 +45,15 @@ router.put("/update-user/:id", (req, res) => {
     .catch((err) => res.status(500).json(err));
 });
 
-//DELETE to remove user by its _id
+//DELETE to remove user by its _id - correct
+
+router.delete("/delete-user/:id", (req, res) => {
+  User.findByIdAndRemove(req.params.id, {
+    username: req.body.username,
+    email: req.body.email,
+  })
+    .then((user) => res.json(user))
+    .catch((err) => res.status(500).json(err));
+});
 
 module.exports = router;
