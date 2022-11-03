@@ -11,7 +11,7 @@ router.get("/all-thoughts", (req, res) => {
   });
 });
 
-//get a thought by its id: - how can I test this?
+//get a thought by its id- works.
 
 router.get("/find-thought/:id", (req, res) => {
   Thought.findById(req.params.id, (err, result) => {
@@ -52,6 +52,39 @@ router.post("/create-thought", (req, res) => {
       console.log(err);
       res.status(500).json(err);
     });
+});
+
+//PUT to update a thought by its _id - work.
+
+router.put("/update-thought/:id", (req, res) => {
+  return Thought.findByIdAndUpdate(
+    req.params.id,
+    {
+      thoughtText: req.body.thoughtText,
+    },
+    { new: true }
+  )
+    .then((thought) => res.json(thought))
+    .catch((err) => res.status(500).json(err));
+});
+
+//delete a thought by its ID - doesn't work yet
+
+router.delete("/delete-thought/:id", (req, res) => {
+  Thought.findOneAndDelete({ id_: req.params.thoughtId })
+    .then((thought) => User.findByIdAndUpdate(
+        { thoughts: req.params.thoughtId },
+        { $pull: { thoughts: req.params.thoughtId } },
+        { new: true }
+    )
+    .then((user) => {
+      if(!user) {
+        res.status(400).json({message: "Thought deleted but user not found"})
+      } else {
+        res.json({message: "Thought deleted and user updated"})
+      }
+    })
+    .catch((err) => res.status(500).json(err));
 });
 
 module.exports = router;

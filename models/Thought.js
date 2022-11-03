@@ -30,7 +30,7 @@ const thoughtSchema = new mongoose.Schema(
     createdAt: {
       type: Date,
       default: Date.now, //will this Date object be enough.
-      get: (date) => date.toLocalString(),
+      get: (date) => date.toLocaleString(),
     },
     username: { type: String, required: true },
     //link to subdocument reaction schema.
@@ -50,7 +50,7 @@ const thoughtSchema = new mongoose.Schema(
 //length of the thought's reactions array field on query.
 
 thoughtSchema.virtual("reactionCount").get(function () {
-  return this.thoughtSchema.reactions.length;
+  return this.reaction.length;
 });
 
 // Uses mongoose.model() to create model
