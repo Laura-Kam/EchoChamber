@@ -68,23 +68,28 @@ router.put("/update-thought/:id", (req, res) => {
     .catch((err) => res.status(500).json(err));
 });
 
-//delete a thought by its ID - doesn't work yet
+//delete a thought by its ID - works
 
-router.delete("/delete-thought/:id", (req, res) => {
-  Thought.findOneAndDelete({ id_: req.params.thoughtId })
-    .then((thought) => User.findByIdAndUpdate(
+router.delete("/delete-thought/:thoughtId", (req, res) => {
+  Thought.findOneAndDelete({ _id: req.params.thoughtId })
+    .then((thought) =>
+      User.findOneAndUpdate(
         { thoughts: req.params.thoughtId },
         { $pull: { thoughts: req.params.thoughtId } },
         { new: true }
+      )
     )
     .then((user) => {
-      if(!user) {
-        res.status(400).json({message: "Thought deleted but user not found"})
+      if (!user) {
+        res.status(404).json({ message: "Thought deleted but user not found" });
       } else {
-        res.json({message: "Thought deleted and user updated"})
+        res.json({ message: "Thought deleted and user updated" });
       }
     })
-    .catch((err) => res.status(500).json(err));
+    .catch((err) => {
+      console.log(err);
+      return res.status(500).json(err);
+    });
 });
 
 module.exports = router;
