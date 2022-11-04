@@ -15,6 +15,27 @@ const userController = {
       }
     });
   },
+  createUser(req, res) {
+    User.create({ username: req.body.username, email: req.body.email })
+      .then((user) => res.json(user))
+      .catch((err) => res.status(500).json(err));
+  },
+  updateUserById(req, res) {
+    User.findByIdAndUpdate(req.params.id, {
+      username: req.body.username,
+      email: req.body.email,
+    })
+      .then((user) => res.json(user))
+      .catch((err) => res.status(500).json(err));
+  },
+  deleteUserById(req, res) {
+    User.findByIdAndRemove(req.params.id, {
+      username: req.body.username,
+      email: req.body.email,
+    })
+      .then((user) => res.json(user))
+      .catch((err) => res.status(500).json(err));
+  },
 };
 
 module.exports = userController;

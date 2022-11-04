@@ -6,6 +6,9 @@ const db = require("../../config/connection");
 const {
   getAllUsers,
   findUserById,
+  createUser,
+  updateUserById,
+  deleteUserById,
 } = require("../../controllers/userController");
 // GET all users
 
@@ -17,33 +20,14 @@ router.route("/find-user/:id").get(findUserById);
 
 // POST/Create a new user:
 
-router.post("/create", (req, res) => {
-  console.log("body:", req.body);
-  User.create({ username: req.body.username, email: req.body.email })
-    .then((user) => res.json(user))
-    .catch((err) => res.status(500).json(err));
-});
+router.router("/create").post(createUser);
 
 //PUT to update a user by its _id
 
-router.put("/update-user/:id", (req, res) => {
-  User.findByIdAndUpdate(req.params.id, {
-    username: req.body.username,
-    email: req.body.email,
-  })
-    .then((user) => res.json(user))
-    .catch((err) => res.status(500).json(err));
-});
+router.router("/update-user/:id").put(updateUserById);
 
 //DELETE to remove user by its _id - correct
 
-router.delete("/delete-user/:id", (req, res) => {
-  User.findByIdAndRemove(req.params.id, {
-    username: req.body.username,
-    email: req.body.email,
-  })
-    .then((user) => res.json(user))
-    .catch((err) => res.status(500).json(err));
-});
+router.router("/delete-user/:id").delete(deleteUserById);
 
 module.exports = router;
