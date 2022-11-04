@@ -13,7 +13,7 @@ const reactionSchema = new mongoose.Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      get: (date) => date.toLocalString(),
+      get: (date) => date.toLocaleString(),
     },
   },
   {

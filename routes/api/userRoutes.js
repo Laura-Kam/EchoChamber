@@ -3,27 +3,17 @@
 const { User } = require("../../models");
 const router = require("express").Router();
 const db = require("../../config/connection");
-
+const {
+  getAllUsers,
+  findUserById,
+} = require("../../controllers/userController");
 // GET all users
 
-router.get("/all-users", (req, res) => {
-  User.find().then((user) => {
-    return res.json({ status: 200, success: true, data: user });
-  });
-});
+router.route("/all-users").get(getAllUsers);
 
 // GET a single user by its _id and populated thought and friend data
 
-router.get("/find-user/:id", (req, res) => {
-  User.findById(req.params.id, (err, result) => {
-    if (result) {
-      res.status(200).json(result);
-    } else {
-      console.log("Uh Oh, something went wrong");
-      res.status(500).json({ message: "something went wrong" });
-    }
-  });
-});
+router.route("/find-user/:id").get(findUserById);
 
 // POST/Create a new user:
 

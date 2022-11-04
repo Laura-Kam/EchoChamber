@@ -92,4 +92,44 @@ router.delete("/delete-thought/:thoughtId", (req, res) => {
     });
 });
 
+//api/thoughts/:thoughtId/reactions
+//POST to create a reaction stored in a single thought's reactions array field
+
+router.post("/:thoughtId/reaction", (req, res) => {
+  Thought.findOneAndUpdate(
+    { _id: req.params.thoughtId },
+    { $addToSet: { reaction: req.body } },
+    { runValidators: true, new: true }
+  )
+    .then((reaction) =>
+      !reaction
+        ? res.status(404).json({ message: "No reaction created" })
+        : res.json(reaction)
+    )
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
+// DELETE to pull and remove a reaction by the reaction's reactionId value
+
+router.delete("/:thoughtId/:reactionId", (req, res) => {
+  Thought.findOneAndUpdate(
+    { _id: req.params.thoughtId },
+    { $pull: { reaction: { reactionId: req.params.reactionId } } },
+    { runValidators: true, new: true }
+  )
+    .then((reaction) =>
+      !reaction
+        ? res.status(404).json({ message: "No reaction deleted" })
+        : res.json(reaction)
+    )
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
+//Application deletes a user's associated thoughts when the user is deleted.
 module.exports = router;
