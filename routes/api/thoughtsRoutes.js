@@ -23,7 +23,7 @@ router.route("/find-thought/:id").get(findThoughtById);
 
 //POST to create new thought, push created thought's _id to the associated
 //user's thoughts array field - works
-
+//needs username and thought text and userID
 router.route("/create-thought").post(createThought);
 
 //PUT to update a thought by its _id - work.
@@ -36,7 +36,7 @@ router.route("/delete-thought/:thoughtId").delete(deleteThoughtById);
 
 //api/thoughts/:thoughtId/reactions
 //POST to create a reaction stored in a single thought's reactions array field
-
+//needs reactionBody and username
 router.route("/:thoughtId/reaction").post(createReaction);
 
 // DELETE to pull and remove a reaction by the reaction's reactionId value

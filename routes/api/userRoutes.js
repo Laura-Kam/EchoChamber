@@ -18,14 +18,14 @@ router.route("/all-users").get(getAllUsers);
 
 // GET a single user by its _id and populated thought and friend data
 
-router.route("/find-user/:id").get(findUserById);
+router.route("/find-user/:userId").get(findUserById);
 
-// POST/Create a new user:
+// POST/Create a new user - new username and email
 
 router.route("/create").post(createUser);
 
 //PUT to update a user by its _id
-
+//use previous id - use get request again and refresh
 router.route("/update-user/:id").put(updateUserById);
 
 //DELETE to remove user by its _id - correct

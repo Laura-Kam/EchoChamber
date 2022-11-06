@@ -9,6 +9,7 @@ const userController = {
   //findUserByid and populate thoughts and friends.
 
   findUserById(req, res) {
+    console.log(req.params.userId);
     User.findOne({ _id: req.params.userId })
       .populate({
         path: "thoughts",
