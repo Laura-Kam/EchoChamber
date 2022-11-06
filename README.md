@@ -50,7 +50,7 @@ npm i.
 
 ## Instructions for users of the app
 
-Clone the application, install dependencies: Express, MongoDB and Mongoose. Then run the app using node server.js using 'npm start'.
+Clone the application, install dependencies: Nodemon, Express, MongoDB and Mongoose. Then run the app using nodemon server.js using 'npm start'.
 
 ## Features of the project
 
@@ -80,9 +80,9 @@ It is a command-line application, which uses an API for a social network web app
 
 # Link to video
 
-- [EchoChamber Video Google Drive]()
+- [EchoChamber Video Google Drive](https://drive.google.com/file/d/1LfQB0In41m-Y6bdQfYOsYOGHTE7bVNL-/view)
 
-- [EchoChamber Screencastify]()
+- [EchoChamber Screencastify](https://watch.screencastify.com/v/8j1t8SawFdbpT6eB2XDT)
 
 ## How to contribute
 
