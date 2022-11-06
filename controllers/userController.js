@@ -5,16 +5,28 @@ const userController = {
       return res.json({ status: 200, success: true, data: user });
     });
   },
+
+  //findUserByid and populate thoughts and friends.
+
   findUserById(req, res) {
-    User.findById(req.params.id, (err, result) => {
-      if (result) {
-        res.status(200).json(result);
-      } else {
-        console.log("Uh Oh, something went wrong");
-        res.status(500).json({ message: "something went wrong" });
-      }
-    });
+    User.findOne({ _id: req.params.userId })
+      .populate({
+        path: "thoughts",
+        select: "-_v",
+      })
+      .populate({
+        path: "friends",
+        select: "-_v",
+      })
+      .select("-_v")
+      .then((user) =>
+        !user
+          ? res.status(404).json({ message: "No user with that Id" })
+          : res.json(user)
+      )
+      .catch((err) => res.status(500).json(err));
   },
+
   createUser(req, res) {
     User.create({ username: req.body.username, email: req.body.email })
       .then((user) => res.json(user))
@@ -35,6 +47,38 @@ const userController = {
     })
       .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
+  },
+  addFriend(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $push: { friends: req.params.friendId } },
+      { runValidators: true, new: true }
+    )
+      .then((userData) =>
+        !userData
+          ? res.status(404).json({ message: "No user with this id!" })
+          : res.json("Friend added 🎉")
+      )
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  },
+  deleteFriend(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $pull: { friends: req.params.friendId } },
+      { runValidators: true, new: true }
+    )
+      .then((userData) =>
+        !userData
+          ? res.status(404).json({ message: "Friend not deleted!" })
+          : res.json("Friend deleted 🎉")
+      )
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
   },
 };
 

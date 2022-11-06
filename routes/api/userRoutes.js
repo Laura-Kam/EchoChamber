@@ -9,6 +9,8 @@ const {
   createUser,
   updateUserById,
   deleteUserById,
+  addFriend,
+  deleteFriend,
 } = require("../../controllers/userController");
 // GET all users
 
@@ -20,14 +22,22 @@ router.route("/find-user/:id").get(findUserById);
 
 // POST/Create a new user:
 
-router.router("/create").post(createUser);
+router.route("/create").post(createUser);
 
 //PUT to update a user by its _id
 
-router.router("/update-user/:id").put(updateUserById);
+router.route("/update-user/:id").put(updateUserById);
 
 //DELETE to remove user by its _id - correct
 
-router.router("/delete-user/:id").delete(deleteUserById);
+router.route("/delete-user/:id").delete(deleteUserById);
+
+//post to add a new friend to a user's friend list.
+
+router.route("/:userId/friends/:friendId").post(addFriend);
+
+//delete friend
+
+router.route("/:userId/friends/:friendId").delete(deleteFriend);
 
 module.exports = router;
