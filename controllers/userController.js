@@ -57,7 +57,7 @@ const userController = {
       .then((userData) =>
         !userData
           ? res.status(404).json({ message: "No user with this id!" })
-          : res.json("Friend added 🎉")
+          : res.json(["Friend added 🎉", userData])
       )
       .catch((err) => {
         console.log(err);
@@ -73,7 +73,7 @@ const userController = {
       .then((userData) =>
         !userData
           ? res.status(404).json({ message: "Friend not deleted!" })
-          : res.json("Friend deleted 🎉")
+          : res.json(["Friend deleted 🎉", userData])
       )
       .catch((err) => {
         console.log(err);
