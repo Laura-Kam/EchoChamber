@@ -80,9 +80,9 @@ It is a command-line application, which uses an API for a social network web app
 
 # Link to video
 
-- [EchoChamber Video Google Drive](https://drive.google.com/file/d/1LfQB0In41m-Y6bdQfYOsYOGHTE7bVNL-/view)
+- [EchoChamber Video Google Drive](https://drive.google.com/file/d/1quPyr04qlECHEYnzyIK2_QDlDc064rSl/view)
 
-- [EchoChamber Screencastify](https://watch.screencastify.com/v/8j1t8SawFdbpT6eB2XDT)
+- [EchoChamber Screencastify](https://watch.screencastify.com/v/WmSWJcROgn9cd9LAN12u)
 
 ## How to contribute
 
