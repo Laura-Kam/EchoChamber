@@ -60,9 +60,9 @@ It is a command-line application, which uses an API for a social network web app
 
 [Link to repo](https://github.com/Laura-Kam/EchoChamber/)
 
-## Screenshot of application:
+## Screenshot of Application:
 
-[Screenshot of website](https://github.com/Laura-Kam/EchoChamber/issues/1#issue-1437389159)
+![Screenshot of website](https://user-images.githubusercontent.com/104718053/200170893-f0b115d1-299f-4da6-b52f-fc478d6d2118.png)
 
 ## Bugs
 
